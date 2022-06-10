@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->timestamps();
             $table->string("address");
-            $table->string("additional_address");
+            $table->string("additional_address")->nullable();
             $table->string("city");
             $table->unsignedInteger("zip_code");
             $table->foreignUuid("seller_id")->references('id')->on('sellers');
