@@ -16,8 +16,17 @@ use Illuminate\Support\Carbon;
  * @property string $additional_address just extra information
  * @property string $city
  * @property int    $zip_code
+ * @property string $seller_id
  */
 class Location extends BaseUuidModel
 {
     use HasFactory;
+
+    /**
+     * Get the seller that owns the location.
+     */
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
+    }
 }

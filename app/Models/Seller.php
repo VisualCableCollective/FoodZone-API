@@ -17,4 +17,12 @@ use Illuminate\Support\Carbon;
 class Seller extends BaseUuidModel
 {
     use HasFactory;
+
+    /**
+     * Get the locations of this seller.
+     */
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
 }
