@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->timestamps();
             $table->string("name");
+            $table->foreignUuid("seller_id")->references('id')->on('sellers');
         });
     }
 

@@ -25,4 +25,20 @@ class Seller extends BaseUuidModel
     {
         return $this->hasMany(Location::class);
     }
+
+    /**
+     * Get the locations of this seller.
+     */
+    public function productCategories()
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
+
+    /**
+     * Get the locations of this seller.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

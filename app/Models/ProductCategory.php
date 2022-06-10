@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property string $name
+ * @property string $seller_id
  */
 class ProductCategory extends BaseUuidModel
 {
@@ -23,5 +24,13 @@ class ProductCategory extends BaseUuidModel
     public function products()
     {
         return $this->hasMany(Product::class, "category_id");
+    }
+
+    /**
+     * Get the seller that owns the product category.
+     */
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
     }
 }

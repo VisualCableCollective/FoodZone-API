@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("name");
             $table->unsignedDecimal("price", 5);
             $table->foreignUuid("category_id")->references('id')->on('categories');
+            $table->foreignUuid("seller_id")->references('id')->on('sellers');
         });
     }
 

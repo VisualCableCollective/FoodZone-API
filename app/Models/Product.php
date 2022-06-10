@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property float $price as decimal
  * @property string $category_id
+ * @property string $seller_id
  */
 class Product extends BaseUuidModel
 {
@@ -25,5 +26,13 @@ class Product extends BaseUuidModel
     public function category()
     {
         return $this->belongsTo(ProductCategory::class);
+    }
+
+    /**
+     * Get the seller that owns the product.
+     */
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
     }
 }
