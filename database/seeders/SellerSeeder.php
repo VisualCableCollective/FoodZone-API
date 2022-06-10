@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location;
 use App\Models\Seller;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,7 +17,7 @@ class SellerSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->getSellerNames() as $companyName) {
-            $seller = Seller::factory(1)->create([
+            Seller::factory(1)->has(Location::factory()->count(rand(1, 4)))->create([
                 "name" => $companyName
             ]);
         }
