@@ -13,8 +13,23 @@ class SellerSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        Seller::factory()->count(rand(10, 100))->create();
+        foreach ($this->getSellerNames() as $companyName) {
+            $seller = Seller::factory(1)->create([
+                "name" => $companyName
+            ]);
+        }
+    }
+
+    private function getSellerNames(): array
+    {
+        return [
+            "Brummis Imbiss",
+            "Restaurant Alte Schule",
+            "Restaurant Am Wasserturm",
+            "Volvo Trucks Dinner",
+            "Brasserie Steffen"
+        ];
     }
 }
