@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string("name");
             $table->unsignedDecimal("price", 5);
-            $table->foreignUuid("category_id")->references('id')->on('categories');
+            $table->foreignUuid("category_id")->nullable()->references('id')->on('product_categories');
             $table->foreignUuid("seller_id")->references('id')->on('sellers');
         });
     }
