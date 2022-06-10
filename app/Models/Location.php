@@ -9,13 +9,13 @@ use Illuminate\Support\Carbon;
 /**
  * A location represents for example a single restaurant of a company at a specific address.
  *
- * @property string id as uuid
- * @property Carbon created_at
- * @property Carbon updated_at
- * @property string address includes the street name and house number
- * @property string additional_address just extra information
- * @property string city
- * @property int    zip_code
+ * @property string $id as uuid
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property string $address includes the street name and house number
+ * @property string $additional_address just extra information
+ * @property string $city
+ * @property int    $zip_code
  */
 class Location extends Model
 {
