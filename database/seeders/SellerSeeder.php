@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Location;
+use App\Models\ProductCategory;
 use App\Models\Seller;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class SellerSeeder extends Seeder
@@ -16,8 +18,18 @@ class SellerSeeder extends Seeder
      */
     public function run(): void
     {
+        $convCatNames = [];
+        foreach (ProductCategory::factory()->getCategoryNames() as $catName) {
+            $convCatNames[] = ["name" => $catName];
+        }
+
         foreach (Seller::factory()->getSellerNames() as $companyName) {
-            Seller::factory(1)->has(Location::factory()->count(rand(1, 4)))->create([
+            Seller::factory(1)
+                ->has(Location::factory()->count(rand(1, 4)))
+                ->has(ProductCategory::factory()->count(rand(3, count(ProductCategory::factory()->getCategoryNames())))
+                    ->state(new Sequence($convCatNames))
+                )
+                ->create([
                 "name" => $companyName
             ]);
         }
