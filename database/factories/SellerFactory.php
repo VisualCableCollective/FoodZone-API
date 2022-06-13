@@ -17,7 +17,18 @@ class SellerFactory extends Factory
     public function definition()
     {
         return [
-            "name" => ""
+            "name" => "DEFAULT_SELLER_NAME" // replaced by seeder
+        ];
+    }
+
+    public function getSellerNames(): array
+    {
+        return [
+            "Brummis Imbiss",
+            "Restaurant Alte Schule",
+            "Restaurant Am Wasserturm",
+            "Volvo Trucks Dinner",
+            "Brasserie Steffen"
         ];
     }
 }
