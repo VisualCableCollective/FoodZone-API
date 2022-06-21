@@ -26,7 +26,8 @@ class SellerSeeder extends Seeder
         foreach (Seller::factory()->getSellerNames() as $companyName) {
             Seller::factory(1)
                 ->has(Location::factory()->count(rand(1, 4)))
-                ->has(ProductCategory::factory()->count(rand(3, count(ProductCategory::factory()->getCategoryNames())))
+                ->has(ProductCategory::factory()
+                    ->count(rand(3, count(ProductCategory::factory()->getCategoryNames())))
                     ->state(new Sequence(fn ($sequence) => ['name' => next($convCatNames)],))
                 )
                 ->create([
