@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\LocationsList;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class LocationCollection extends ResourceCollection
+class SellerCollection extends ResourceCollection
 {
+    public static $wrap = 'sellers';
+
     /**
      * Transform the resource collection into an array.
      *
@@ -14,6 +16,6 @@ class LocationCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return SellerResource::collection($this);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LocationsList\SellerCollection;
 use App\Models\Location;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -10,10 +12,11 @@ class LocationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return SellerCollection
      */
     public function index()
     {
+        // Get locations near the user grouped by the seller to minimize data usage
         $locations = Location::take(6)->get([
             'id',
             'seller_id',
@@ -23,7 +26,12 @@ class LocationController extends Controller
             'zip_code'
         ])->groupBy('seller_id');
 
-        return $locations;
+        $sellers = Seller::select('name', 'id')->find($locations->keys());
+        foreach ($sellers as $seller) {
+            $seller->locations = $locations[$seller->id];
+        }
+
+        return new SellerCollection($sellers);
     }
 
     /**
