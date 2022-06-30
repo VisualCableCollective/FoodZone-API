@@ -23,7 +23,9 @@ class LocationController extends Controller
             'address',
             'additional_address',
             'city',
-            'zip_code'
+            'zip_code',
+            'latitude',
+            'longitude'
         ])->groupBy('seller_id');
 
         $sellers = Seller::select('name', 'id')->find($locations->keys());

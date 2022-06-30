@@ -20,6 +20,8 @@ class LocationResource extends JsonResource
             'additional_address' => $this->additional_address,
             'city' => $this->city,
             'zip_code' => $this->zip_code,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude
         ];
     }
 }

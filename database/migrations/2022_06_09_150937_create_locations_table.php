@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string("additional_address")->nullable();
             $table->string("city");
             $table->unsignedInteger("zip_code");
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
             $table->foreignUuid("seller_id")->references('id')->on('sellers');
         });
     }
