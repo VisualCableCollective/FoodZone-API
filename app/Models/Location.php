@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Bagusindrayana\LaravelCoordinate\Traits\LaravelCoordinate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
 
@@ -21,7 +22,7 @@ use Illuminate\Support\Carbon;
  */
 class Location extends BaseUuidModel
 {
-    use HasFactory;
+    use HasFactory, LaravelCoordinate;
 
     /**
      * Get the seller that owns the location.

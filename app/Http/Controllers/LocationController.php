@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetLocationsRequest;
 use App\Http\Resources\LocationsList\SellerCollection;
 use App\Models\Location;
 use App\Models\Seller;
@@ -14,10 +15,16 @@ class LocationController extends Controller
      *
      * @return SellerCollection
      */
-    public function index()
+    public function index(GetLocationsRequest $request)
     {
+        $validated_request = $request->validated();
+
         // Get locations near the user grouped by the seller to minimize data usage
-        $locations = Location::take(6)->get([
+        $locations = Location::nearby([
+            $validated_request['latitude'],
+            $validated_request['longitude']
+        ], 10000, 1)
+        ->get([
             'id',
             'seller_id',
             'address',
