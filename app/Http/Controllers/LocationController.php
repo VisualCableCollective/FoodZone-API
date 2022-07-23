@@ -7,6 +7,7 @@ use App\Http\Resources\LocationsList\SellerCollection;
 use App\Models\Location;
 use App\Models\Seller;
 use Illuminate\Http\Request;
+use Spatie\Geocoder\Facades\Geocoder;
 
 class LocationController extends Controller
 {
@@ -17,6 +18,48 @@ class LocationController extends Controller
      */
     public function index(GetLocationsRequest $request)
     {
+        $sellers = null;
+        if ($request->has("address")) {
+            $sellers = $this->getSellersByAddress($request);
+        } else if ($request->has("latitude")) {
+            $sellers = $this->getSellersByGeocode($request);
+        } else {
+            abort(400, "Missing request parameters.");
+        }
+
+        return new SellerCollection($sellers);
+    }
+
+    private function getSellersByAddress(GetLocationsRequest $request) {
+        $validated_request = $request->validated();
+
+        $coords_data = Geocoder::getCoordinatesForAddress($validated_request['address']);
+
+        // Get locations near the user grouped by the seller to minimize data usage
+        $locations = Location::nearby([
+            $coords_data["lat"],
+            $coords_data["lng"]
+        ], 10000, 1)
+            ->get([
+                'id',
+                'seller_id',
+                'address',
+                'additional_address',
+                'city',
+                'zip_code',
+                'latitude',
+                'longitude'
+            ])->groupBy('seller_id');
+
+        $sellers = Seller::select('name', 'id')->find($locations->keys());
+        foreach ($sellers as $seller) {
+            $seller->locations = $locations[$seller->id];
+        }
+
+        return $sellers;
+    }
+
+    private function getSellersByGeocode(GetLocationsRequest $request) {
         $validated_request = $request->validated();
 
         // Get locations near the user grouped by the seller to minimize data usage
@@ -24,23 +67,23 @@ class LocationController extends Controller
             $validated_request['latitude'],
             $validated_request['longitude']
         ], 10000, 1)
-        ->get([
-            'id',
-            'seller_id',
-            'address',
-            'additional_address',
-            'city',
-            'zip_code',
-            'latitude',
-            'longitude'
-        ])->groupBy('seller_id');
+            ->get([
+                'id',
+                'seller_id',
+                'address',
+                'additional_address',
+                'city',
+                'zip_code',
+                'latitude',
+                'longitude'
+            ])->groupBy('seller_id');
 
         $sellers = Seller::select('name', 'id')->find($locations->keys());
         foreach ($sellers as $seller) {
             $seller->locations = $locations[$seller->id];
         }
 
-        return new SellerCollection($sellers);
+        return $sellers;
     }
 
     /**

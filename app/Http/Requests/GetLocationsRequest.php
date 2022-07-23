@@ -24,8 +24,9 @@ class GetLocationsRequest extends FormRequest
     public function rules()
     {
         return [
-            'latitude' => 'required|between:-90,90',
-            'longitude' => 'required|between:-180,180'
+            'latitude' => 'sometimes|between:-90,90',
+            'longitude' => 'sometimes|between:-180,180',
+            'address' => 'sometimes|string'
         ];
     }
 }
