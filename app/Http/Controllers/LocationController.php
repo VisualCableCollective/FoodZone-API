@@ -18,19 +18,19 @@ class LocationController extends Controller
      */
     public function index(GetLocationsRequest $request)
     {
-        $sellers = null;
+        $data = null;
         if ($request->has("address")) {
-            $sellers = $this->getSellersByAddress($request);
+            $data = $this->getDataByAddress($request);
         } else if ($request->has("latitude")) {
-            $sellers = $this->getSellersByGeocode($request);
+            $data = $this->getDataByGeocode($request);
         } else {
             abort(400, "Missing request parameters.");
         }
 
-        return new SellerCollection($sellers);
+        return (new SellerCollection($data["sellers"]))->additional(['user_coords' => $data["user_coords"]]);
     }
 
-    private function getSellersByAddress(GetLocationsRequest $request) {
+    private function getDataByAddress(GetLocationsRequest $request) {
         $validated_request = $request->validated();
 
         $coords_data = Geocoder::getCoordinatesForAddress($validated_request['address']);
@@ -56,7 +56,7 @@ class LocationController extends Controller
             $seller->locations = $locations[$seller->id];
         }
 
-        return $sellers;
+        return ["sellers" => $sellers, "user_coords" => ["lat" => $coords_data["lat"], "lng" => $coords_data["lng"]]];
     }
 
     private function getSellersByGeocode(GetLocationsRequest $request) {
@@ -83,7 +83,7 @@ class LocationController extends Controller
             $seller->locations = $locations[$seller->id];
         }
 
-        return $sellers;
+        return ["sellers" => $sellers, "user_coords" => ["lat" => $validated_request['latitude'], "lng" => $validated_request['longitude']]];
     }
 
     /**

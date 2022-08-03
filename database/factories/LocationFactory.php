@@ -20,8 +20,8 @@ class LocationFactory extends Factory
             "address" => $this->faker->streetAddress(),
             "city" => $this->faker->city(),
             "zip_code" => $this->faker->postcode(),
-            "latitude" => $this->faker->latitude(),
-            "longitude" => $this->faker->longitude(),
+            "latitude" => $this->faker->latitude(54, 54.5),
+            "longitude" => $this->faker->longitude(9, 9.3),
         ];
     }
 }
