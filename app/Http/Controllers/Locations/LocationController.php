@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Locations;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\GetLocationsRequest;
 use App\Http\Resources\LocationsList\SellerCollection;
 use App\Models\Location;

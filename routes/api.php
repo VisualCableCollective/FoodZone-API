@@ -18,4 +18,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('locations', \App\Http\Controllers\LocationController::class);
+Route::apiResource('locations', \App\Http\Controllers\Locations\LocationController::class);
+Route::prefix('locations/{locationId}/menu')->group(function() {
+    Route::get('categories', [\App\Http\Controllers\Locations\Menu\CategoryController::class, 'index']);
+});

@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-abstract class BaseUuidModel extends Model
+abstract class BaseUuidModel extends BaseModel
 {
     public static function boot()
     {

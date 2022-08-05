@@ -19,6 +19,9 @@ use Illuminate\Support\Carbon;
  * @property double $latitude
  * @property double $longitude
  * @property string $seller_id
+ * @property Seller $seller
+ *
+ * @method static Location findorfail()
  */
 class Location extends BaseUuidModel
 {
