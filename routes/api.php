@@ -22,3 +22,7 @@ Route::apiResource('locations', \App\Http\Controllers\Locations\LocationControll
 Route::prefix('locations/{locationId}/menu')->group(function() {
     Route::get('categories', [\App\Http\Controllers\Locations\Menu\CategoryController::class, 'index']);
 });
+
+Route::prefix('seller')->group(function() {
+    Route::post('categories', [\App\Http\Controllers\Seller\CategoryController::class, 'store']);
+});
