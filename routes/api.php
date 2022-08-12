@@ -23,6 +23,11 @@ Route::prefix('locations/{locationId}/menu')->group(function() {
     Route::get('categories', [\App\Http\Controllers\Locations\Menu\CategoryController::class, 'index']);
 });
 
-Route::prefix('seller')->group(function() {
+Route::prefix('seller')->middleware(['auth', 'seller'])->group(function() {
+    Route::get('categories', [\App\Http\Controllers\Seller\CategoryController::class, 'index']);
     Route::post('categories', [\App\Http\Controllers\Seller\CategoryController::class, 'store']);
+});
+
+Route::prefix('users')->group(function() {
+    Route::middleware('dev')->get('act-as/{userId}', [\App\Http\Controllers\UserController::class, 'actAs']);
 });

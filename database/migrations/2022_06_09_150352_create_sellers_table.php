@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->timestamps();
             $table->string("name");
+            $table->foreignId("owner_id")->references('id')->on('users');
         });
     }
 
