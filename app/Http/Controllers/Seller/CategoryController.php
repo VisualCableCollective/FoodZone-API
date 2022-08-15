@@ -21,12 +21,21 @@ class CategoryController extends Controller
             'name' => $validatedRequest["name"]
         ]);
 
-        $category->thumbnail_path = $request->file('thumbnail')->storeAs(
-            'public/thumbnails/categories', $category->id . "." . $request->file('thumbnail')->getClientOriginalExtension()
-        );
+        if ($request->has('thumbnail')) {
+            $category->thumbnail_path = $request->file('thumbnail')->storeAs(
+                'public/thumbnails/categories', $category->id . "." . $request->file('thumbnail')->getClientOriginalExtension()
+            );
 
-        $category->save();
+            $category->save();
+        }
 
-        return ["success" => true, "data" => $category];
+        return $category;
+    }
+
+    public function delete($categoryId, Request $request) {
+        $category = $request->user()->seller->productCategories()->findorfail($categoryId);
+        $category->delete();
+
+        return response('', 204);
     }
 }
